@@ -84,47 +84,32 @@ pip install -r requirements.txt
 
 ## Reproducibility
 
-Random seed was fixed to ensure reproducible model training and evaluation:
+To improve reproducibility, fixed random seeds and deterministic TensorFlow operations were used throughout model development.
+
+Settings:
+
+- Fixed random seed: `42`
+- Fixed NumPy random state
+- Fixed TensorFlow random state
+- Fixed Python hash seed
+- Deterministic TensorFlow operations enabled
+- CuDNN deterministic mode enabled when supported
+
+The workflow was designed so that the same study area, input data, and software environment produce consistent results across repeated model runs.
+
+Example implementation:
 
 ```python
 SEED = 42
-```
-
-Deterministic TensorFlow operations were enabled whenever possible.
-
----
-
-# ==========================================================
-# STEP 0. REPRODUCIBILITY SETTINGS
-# ==========================================================
-# This step fixes random seeds and deterministic operations
-# so that the CNN model can be reproduced as consistently as possible
-# when using the same study area, same input data, same software environment,
-# and same hardware configuration.
-
-import os
-import random
-import numpy as np
-import tensorflow as tf
-
-SEED = 42
-
-os.environ["PYTHONHASHSEED"] = str(SEED)
-os.environ["TF_DETERMINISTIC_OPS"] = "1"
-os.environ["TF_CUDNN_DETERMINISTIC"] = "1"
 
 random.seed(SEED)
 np.random.seed(SEED)
 tf.random.set_seed(SEED)
+```
 
-try:
-    tf.config.experimental.enable_op_determinism()
-except Exception:
-    pass
+Note:
 
-print("Reproducibility seed fixed at:", SEED)
-
-# For reproducibility, the random seed was fixed at 42 and deterministic TensorFlow operations were enabled. Exact numerical results may still vary slightly across different TensorFlow versions, GPU/CUDA configurations, and operating systems.
+Exact numerical values may still vary slightly across different hardware configurations (CPU/GPU), TensorFlow versions, CUDA libraries, and operating systems.
 
 ## Data Availability
 
