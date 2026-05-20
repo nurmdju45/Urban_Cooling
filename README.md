@@ -124,6 +124,11 @@ The complete workflow can regenerate the datasets.
 
 ---
 
+## Disclaimer
+
+The research design, methodological framework, data preparation strategy, labeling criteria, analysis, interpretation of results, and scientific conclusions were developed by the author.
+
+AI-assisted coding support (including Claude Sonnet and conversational AI tools) was used during parts of the software implementation process to assist with code development, debugging, code organization, and documentation. All generated code and outputs were reviewed, modified, validated, and finalized by the author before use in this study.
 
 ## License
 
