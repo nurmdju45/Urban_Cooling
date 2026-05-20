@@ -94,6 +94,38 @@ Deterministic TensorFlow operations were enabled whenever possible.
 
 ---
 
+# ==========================================================
+# STEP 0. REPRODUCIBILITY SETTINGS
+# ==========================================================
+# This step fixes random seeds and deterministic operations
+# so that the CNN model can be reproduced as consistently as possible
+# when using the same study area, same input data, same software environment,
+# and same hardware configuration.
+
+import os
+import random
+import numpy as np
+import tensorflow as tf
+
+SEED = 42
+
+os.environ["PYTHONHASHSEED"] = str(SEED)
+os.environ["TF_DETERMINISTIC_OPS"] = "1"
+os.environ["TF_CUDNN_DETERMINISTIC"] = "1"
+
+random.seed(SEED)
+np.random.seed(SEED)
+tf.random.set_seed(SEED)
+
+try:
+    tf.config.experimental.enable_op_determinism()
+except Exception:
+    pass
+
+print("Reproducibility seed fixed at:", SEED)
+
+# For reproducibility, the random seed was fixed at 42 and deterministic TensorFlow operations were enabled. Exact numerical results may still vary slightly across different TensorFlow versions, GPU/CUDA configurations, and operating systems.
+
 ## Data Availability
 
 Landsat imagery was accessed through:
